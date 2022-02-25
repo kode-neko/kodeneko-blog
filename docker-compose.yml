@@ -1,0 +1,36 @@
+version: '3'
+
+networks:
+  default:
+    external: true
+    name: 'wordpress-bridge'
+
+services:
+  mariadb:
+    container_name: 'kodeneko_db' 
+    image: 'mariadb'
+    networks:
+      - 'default'
+    environment:
+      MYSQL_ROOT_PASSWORD: '1234qwerty'
+      MYSQL_USER: 'kodeneko_admin'
+      MYSQL_PASSWORD: '1234qwerty'
+      MYSQL_DATABASE: 'kodeneko'
+    volumes:
+      - './database/mariadb:/var/lib/mysql'
+
+  wordpress:
+    depends_on:
+      - 'mariadb'
+    container_name: 'kodeneko_worp'
+    image: 'wordpress'
+    networks:
+      - 'default'
+    environment:
+      WORDPRESS_DB_HOST: 'mariadb:3306'
+      WORDPRESS_DB_USER: 'kodeneko'
+      WORDPRESS_DB_PASSWORD: 'oqjqb0lQNoPAci!Zfa'
+      WORDPRESS_DB_NAME: 'kodeneko_db'
+    volumes:
+      - './plugins:/var/www/html/wp-content/plugins'
+      - './themes:/var/www/html/wp-content/themes'
