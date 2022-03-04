@@ -17,7 +17,7 @@ services:
       MYSQL_PASSWORD: '1234qwerty'
       MYSQL_DATABASE: 'kodeneko'
     volumes:
-      - './database/mariadb:/var/lib/mysql'
+      - './database/mariadb:/var/lib/mysql:rw'
 
   wordpress:
     depends_on:
@@ -27,10 +27,10 @@ services:
     networks:
       - 'default'
     environment:
-      WORDPRESS_DB_HOST: 'mariadb:3306'
-      WORDPRESS_DB_USER: 'kodeneko'
-      WORDPRESS_DB_PASSWORD: 'oqjqb0lQNoPAci!Zfa'
-      WORDPRESS_DB_NAME: 'kodeneko_db'
+      WORDPRESS_DB_HOST: 'kodeneko_db:3306'
+      WORDPRESS_DB_USER: 'kodeneko_admin'
+      WORDPRESS_DB_PASSWORD: '1234qwerty'
+      WORDPRESS_DB_NAME: 'kodeneko'
     volumes:
-      - './plugins:/var/www/html/wp-content/plugins'
-      - './themes:/var/www/html/wp-content/themes'
+      - './plugins:/var/www/html/wp-content/plugins:rw'
+      - './themes:/var/www/html/wp-content/themes:rw'
